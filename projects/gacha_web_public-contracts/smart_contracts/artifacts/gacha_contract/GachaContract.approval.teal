@@ -1,0 +1,1026 @@
+#pragma version 10
+
+smart_contracts.gacha_contract.contract.GachaContract.approval_program:
+    txn ApplicationID
+    bnz main_entrypoint@2
+    callsub __init__
+
+main_entrypoint@2:
+    callsub __puya_arc4_router__
+    return
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.__puya_arc4_router__() -> uint64:
+__puya_arc4_router__:
+    proto 0 1
+    txn NumAppArgs
+    bz __puya_arc4_router___bare_routing@15
+    method "get_mbr()uint64"
+    method "add_new_asset(uint64,uint64,pay)void"
+    method "withdraw_asset(uint64,uint64)void"
+    method "withdraw_algos(uint64)void"
+    method "delete_asset_from_box(uint64)void"
+    method "update_asset_probability(uint64,uint64)void"
+    method "get_asset_info(uint64)(uint64,uint64)"
+    method "update_raffle_price(uint64)void"
+    method "raffle_helper()void"
+    method "raffle(pay,byte[8])uint64"
+    method "raffle2(pay,byte[])uint64"
+    txna ApplicationArgs 0
+    match __puya_arc4_router___get_mbr_route@2 __puya_arc4_router___add_new_asset_route@3 __puya_arc4_router___withdraw_asset_route@4 __puya_arc4_router___withdraw_algos_route@5 __puya_arc4_router___delete_asset_from_box_route@6 __puya_arc4_router___update_asset_probability_route@7 __puya_arc4_router___get_asset_info_route@8 __puya_arc4_router___update_raffle_price_route@9 __puya_arc4_router___raffle_helper_route@10 __puya_arc4_router___raffle_route@11 __puya_arc4_router___raffle2_route@12
+    int 0
+    retsub
+
+__puya_arc4_router___get_mbr_route@2:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    callsub get_mbr
+    itob
+    byte 0x151f7c75
+    swap
+    concat
+    log
+    int 1
+    retsub
+
+__puya_arc4_router___add_new_asset_route@3:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txn GroupIndex
+    int 1
+    -
+    dup
+    gtxns TypeEnum
+    int pay
+    ==
+    assert // transaction type is pay
+    callsub add_new_asset
+    int 1
+    retsub
+
+__puya_arc4_router___withdraw_asset_route@4:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    callsub withdraw_asset
+    int 1
+    retsub
+
+__puya_arc4_router___withdraw_algos_route@5:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    btoi
+    callsub withdraw_algos
+    int 1
+    retsub
+
+__puya_arc4_router___delete_asset_from_box_route@6:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    callsub delete_asset_from_box
+    int 1
+    retsub
+
+__puya_arc4_router___update_asset_probability_route@7:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    callsub update_asset_probability
+    int 1
+    retsub
+
+__puya_arc4_router___get_asset_info_route@8:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    callsub get_asset_info
+    swap
+    itob
+    swap
+    itob
+    concat
+    byte 0x151f7c75
+    swap
+    concat
+    log
+    int 1
+    retsub
+
+__puya_arc4_router___update_raffle_price_route@9:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    btoi
+    callsub update_raffle_price
+    int 1
+    retsub
+
+__puya_arc4_router___raffle_helper_route@10:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    int 1
+    retsub
+
+__puya_arc4_router___raffle_route@11:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txn GroupIndex
+    int 1
+    -
+    dup
+    gtxns TypeEnum
+    int pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    callsub raffle
+    itob
+    byte 0x151f7c75
+    swap
+    concat
+    log
+    int 1
+    retsub
+
+__puya_arc4_router___raffle2_route@12:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txn GroupIndex
+    int 1
+    -
+    dup
+    gtxns TypeEnum
+    int pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    callsub raffle2
+    itob
+    byte 0x151f7c75
+    swap
+    concat
+    log
+    int 1
+    retsub
+
+__puya_arc4_router___bare_routing@15:
+    txn OnCompletion
+    switch __puya_arc4_router_____algopy_default_create@16 __puya_arc4_router___after_if_else@21 __puya_arc4_router___after_if_else@21 __puya_arc4_router___after_if_else@21 __puya_arc4_router___update@17 __puya_arc4_router___delete@18
+    int 0
+    retsub
+
+__puya_arc4_router_____algopy_default_create@16:
+    txn ApplicationID
+    !
+    assert // is creating
+    int 1
+    retsub
+
+__puya_arc4_router___update@17:
+    txn ApplicationID
+    assert // is not creating
+    callsub update
+    int 1
+    retsub
+
+__puya_arc4_router___delete@18:
+    txn ApplicationID
+    assert // is not creating
+    callsub delete
+    int 1
+    retsub
+
+__puya_arc4_router___after_if_else@21:
+    int 0
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.get_mbr() -> uint64:
+get_mbr:
+    proto 0 1
+    callsub get_box_mbr
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.get_box_mbr() -> uint64:
+get_box_mbr:
+    proto 0 1
+    int 116500
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.add_new_asset(asa_id: bytes, asa_prob: bytes, mbr_pay: uint64) -> void:
+add_new_asset:
+    proto 3 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    frame_dig -1
+    gtxns Sender
+    txn Sender
+    ==
+    assert // Payment must come from same addres
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert
+    frame_dig -1
+    gtxns Amount
+    callsub get_box_mbr
+    ==
+    assert
+    int 0
+    byte "assets_count"
+    app_global_get_ex
+    assert // check self.assets_count exists
+    itob
+    frame_dig -3
+    frame_dig -2
+    concat
+    swap
+    byte "assets_list"
+    swap
+    concat
+    swap
+    box_put
+    itxn_begin
+    frame_dig -3
+    btoi
+    global CurrentApplicationAddress
+    int 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    int 0
+    byte "assets_count"
+    app_global_get_ex
+    assert // check self.assets_count exists
+    int 1
+    +
+    byte "assets_count"
+    swap
+    app_global_put
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.withdraw_asset(asa_id: uint64, asa_amt: uint64) -> void:
+withdraw_asset:
+    proto 2 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    itxn_begin
+    txn Sender
+    frame_dig -1
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    frame_dig -2
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.withdraw_algos(amt: uint64) -> void:
+withdraw_algos:
+    proto 1 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    itxn_begin
+    global CurrentApplicationAddress
+    txn Sender
+    frame_dig -1
+    itxn_field Amount
+    itxn_field Receiver
+    itxn_field Sender
+    int pay
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.delete_asset_from_box(box_id: bytes) -> void:
+delete_asset_from_box:
+    proto 1 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    byte "assets_list"
+    frame_dig -1
+    concat
+    dup
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    itxn_begin
+    btoi
+    global CurrentApplicationAddress
+    dup
+    int 0
+    itxn_field AssetAmount
+    itxn_field AssetCloseTo
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    box_del
+    pop
+    int 0
+    byte "assets_count"
+    app_global_get_ex
+    assert // check self.assets_count exists
+    int 1
+    -
+    byte "assets_count"
+    swap
+    app_global_put
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.update_asset_probability(box_id: bytes, asa_prob: bytes) -> void:
+update_asset_probability:
+    proto 2 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    byte "assets_list"
+    frame_dig -2
+    concat
+    dup
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    frame_dig -1
+    concat
+    box_put
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.get_asset_info(box_id: bytes) -> uint64, uint64:
+get_asset_info:
+    proto 1 2
+    byte "assets_list"
+    frame_dig -1
+    concat
+    dup
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    swap
+    box_get
+    assert // check self.assets_list entry exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.update_raffle_price(price: uint64) -> void:
+update_raffle_price:
+    proto 1 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    frame_dig -1
+    int 1000000
+    >=
+    assert // Must be at least 1 $Algo
+    byte "raffle_price"
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.raffle(pay: uint64, seed: bytes) -> uint64:
+raffle:
+    proto 2 1
+    int 0
+    frame_dig -2
+    gtxns Receiver
+    global CreatorAddress
+    ==
+    assert
+    frame_dig -2
+    gtxns Amount
+    int 0
+    byte "raffle_price"
+    app_global_get_ex
+    assert // check self.raffle_price exists
+    >=
+    assert
+    frame_dig -1
+    callsub pcg16_init
+    int 1
+    int 1001
+    int 1
+    callsub pcg16_random
+    bury 1
+    int 2
+    callsub dynamic_array_pop_fixed_size
+    pop
+    int 0
+    dup
+    byte "assets_count"
+    app_global_get_ex
+    assert // check self.assets_count exists
+    int 0
+
+raffle_for_header@1:
+    frame_dig 4
+    frame_dig 3
+    <
+    bz raffle_after_for@7
+    frame_dig 4
+    itob
+    byte "assets_list"
+    swap
+    concat
+    dup
+    frame_bury 0
+    box_get
+    assert // check self.assets_list entry exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig 2
+    +
+    dup
+    frame_bury 2
+    frame_dig 1
+    btoi
+    >=
+    bz raffle_after_if_else@5
+    itxn_begin
+    frame_dig 0
+    dup
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    txn Sender
+    int 1
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 0
+    retsub
+
+raffle_after_if_else@5:
+    frame_dig 4
+    int 1
+    +
+    frame_bury 4
+    b raffle_for_header@1
+
+raffle_after_for@7:
+    int 0
+    frame_bury 0
+    retsub
+
+
+// lib_pcg.pcg32.pcg16_init(seed: bytes) -> uint64:
+pcg16_init:
+    proto 1 1
+    frame_dig -1
+    callsub pcg32_init
+    retsub
+
+
+// lib_pcg.pcg32.pcg32_init(seed: bytes) -> uint64:
+pcg32_init:
+    proto 1 1
+    frame_dig -1
+    len
+    int 8
+    ==
+    assert
+    frame_dig -1
+    btoi
+    int 1442695040888963407
+    callsub __pcg32_init
+    retsub
+
+
+// lib_pcg.pcg32.__pcg32_init(initial_state: uint64, incr: uint64) -> uint64:
+__pcg32_init:
+    proto 2 1
+    int 0
+    frame_dig -1
+    callsub __pcg32_step
+    frame_dig -2
+    addw
+    bury 1
+    frame_dig -1
+    callsub __pcg32_step
+    retsub
+
+
+// lib_pcg.pcg32.__pcg32_step(state: uint64, incr: uint64) -> uint64:
+__pcg32_step:
+    proto 2 1
+    frame_dig -2
+    int 6364136223846793005
+    mulw
+    bury 1
+    frame_dig -1
+    addw
+    bury 1
+    retsub
+
+
+// lib_pcg.pcg32.pcg16_random(state: uint64, lower_bound: uint64, upper_bound: uint64, length: uint64) -> uint64, bytes:
+pcg16_random:
+    proto 4 2
+    frame_dig -4
+    int 16
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    callsub __pcg32_bounded_sequence
+    swap
+    dup
+    frame_bury -4
+    swap
+    retsub
+
+
+// lib_pcg.pcg32.__pcg32_bounded_sequence(state: uint64, bit_size: uint64, lower_bound: uint64, upper_bound: uint64, length: uint64) -> uint64, bytes:
+__pcg32_bounded_sequence:
+    proto 5 2
+    byte ""
+    dupn 5
+    frame_dig -1
+    int 65536
+    <
+    assert
+    frame_dig -1
+    itob
+    extract 6 2
+    frame_dig -4
+    int 8
+    ==
+    bnz __pcg32_bounded_sequence_bool_true@3
+    frame_dig -4
+    int 16
+    ==
+    bnz __pcg32_bounded_sequence_bool_true@3
+    frame_dig -4
+    int 32
+    ==
+    bz __pcg32_bounded_sequence_bool_false@4
+
+__pcg32_bounded_sequence_bool_true@3:
+    int 1
+    b __pcg32_bounded_sequence_bool_merge@5
+
+__pcg32_bounded_sequence_bool_false@4:
+    int 0
+
+__pcg32_bounded_sequence_bool_merge@5:
+    assert
+    frame_dig -4
+    int 3
+    shr
+    dup
+    frame_bury 1
+    int 8
+    swap
+    -
+    frame_bury 5
+    frame_dig -3
+    bnz __pcg32_bounded_sequence_else_body@12
+    frame_dig -2
+    bnz __pcg32_bounded_sequence_else_body@12
+    int 0
+    frame_bury 3
+
+__pcg32_bounded_sequence_for_header@8:
+    frame_dig 3
+    frame_dig -1
+    <
+    bz __pcg32_bounded_sequence_after_if_else@25
+    frame_dig -5
+    callsub __pcg32_unbounded_random
+    swap
+    frame_bury -5
+    itob
+    frame_dig 5
+    frame_dig 1
+    extract3
+    frame_dig 6
+    swap
+    concat
+    frame_bury 6
+    frame_dig 3
+    int 1
+    +
+    frame_bury 3
+    b __pcg32_bounded_sequence_for_header@8
+
+__pcg32_bounded_sequence_else_body@12:
+    frame_dig -2
+    bz __pcg32_bounded_sequence_else_body@14
+    frame_dig -2
+    int 1
+    >
+    assert
+    int 1
+    frame_dig -4
+    shl
+    frame_dig -2
+    >
+    assert
+    frame_dig -2
+    int 1
+    -
+    frame_dig -3
+    >
+    assert
+    frame_dig -2
+    frame_dig -3
+    -
+    frame_bury 0
+    b __pcg32_bounded_sequence_after_if_else@15
+
+__pcg32_bounded_sequence_else_body@14:
+    int 1
+    frame_dig -4
+    shl
+    dup
+    int 1
+    -
+    frame_dig -3
+    >
+    assert
+    frame_dig -3
+    -
+    frame_bury 0
+
+__pcg32_bounded_sequence_after_if_else@15:
+    frame_dig 0
+    dup
+    callsub __uint64_twos
+    callsub __mask_to_uint32
+    swap
+    %
+    frame_bury 4
+    int 0
+    frame_bury 3
+
+__pcg32_bounded_sequence_for_header@16:
+    frame_dig 3
+    frame_dig -1
+    <
+    bz __pcg32_bounded_sequence_after_for@24
+
+__pcg32_bounded_sequence_while_top@18:
+    frame_dig -5
+    callsub __pcg32_unbounded_random
+    dup
+    cover 2
+    frame_bury 2
+    frame_bury -5
+    frame_dig 4
+    >=
+    bz __pcg32_bounded_sequence_while_top@18
+    frame_dig 2
+    frame_dig 0
+    %
+    frame_dig -3
+    +
+    itob
+    frame_dig 5
+    frame_dig 1
+    extract3
+    frame_dig 6
+    swap
+    concat
+    frame_bury 6
+    frame_dig 3
+    int 1
+    +
+    frame_bury 3
+    b __pcg32_bounded_sequence_for_header@16
+
+__pcg32_bounded_sequence_after_for@24:
+
+__pcg32_bounded_sequence_after_if_else@25:
+    frame_dig -5
+    frame_dig 6
+    frame_bury 1
+    frame_bury 0
+    retsub
+
+
+// lib_pcg.pcg32.__pcg32_unbounded_random(state: uint64) -> uint64, uint64:
+__pcg32_unbounded_random:
+    proto 1 2
+    frame_dig -1
+    int 1442695040888963407
+    callsub __pcg32_step
+    frame_dig -1
+    callsub __pcg32_output
+    retsub
+
+
+// lib_pcg.pcg32.__pcg32_output(state: uint64) -> uint64:
+__pcg32_output:
+    proto 1 1
+    frame_dig -1
+    int 18
+    shr
+    frame_dig -1
+    ^
+    int 27
+    shr
+    int 4294967295
+    &
+    frame_dig -1
+    int 59
+    shr
+    dup
+    ~
+    int 1
+    addw
+    bury 1
+    dig 2
+    uncover 2
+    shr
+    cover 2
+    int 31
+    &
+    shl
+    int 4294967295
+    &
+    |
+    retsub
+
+
+// lib_pcg.pcg32.__uint64_twos(value: uint64) -> uint64:
+__uint64_twos:
+    proto 1 1
+    frame_dig -1
+    ~
+    int 1
+    addw
+    bury 1
+    retsub
+
+
+// lib_pcg.pcg32.__mask_to_uint32(value: uint64) -> uint64:
+__mask_to_uint32:
+    proto 1 1
+    frame_dig -1
+    int 4294967295
+    &
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.raffle2(pay: uint64, seed: bytes) -> uint64:
+raffle2:
+    proto 2 1
+    int 0
+    frame_dig -2
+    gtxns Receiver
+    global CreatorAddress
+    ==
+    assert
+    frame_dig -2
+    gtxns Amount
+    int 0
+    byte "raffle_price"
+    app_global_get_ex
+    assert // check self.raffle_price exists
+    >=
+    assert
+    frame_dig -1
+    extract 2 0
+    global LatestTimestamp
+    itob
+    extract 7 1
+    concat
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    dup
+    frame_bury -1
+    extract 2 0
+    global Round
+    itob
+    extract 7 1
+    concat
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    dup
+    frame_bury -1
+    callsub pcg16_init
+    int 1
+    int 1001
+    int 1
+    callsub pcg16_random
+    bury 1
+    int 2
+    callsub dynamic_array_pop_fixed_size
+    pop
+    int 0
+    dup
+    byte "assets_count"
+    app_global_get_ex
+    assert // check self.assets_count exists
+    int 0
+
+raffle2_for_header@1:
+    frame_dig 4
+    frame_dig 3
+    <
+    bz raffle2_after_for@7
+    frame_dig 4
+    itob
+    byte "assets_list"
+    swap
+    concat
+    dup
+    frame_bury 0
+    box_get
+    assert // check self.assets_list entry exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig 2
+    +
+    dup
+    frame_bury 2
+    frame_dig 1
+    btoi
+    >=
+    bz raffle2_after_if_else@5
+    itxn_begin
+    frame_dig 0
+    dup
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    txn Sender
+    int 1
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    box_get
+    assert // check self.assets_list entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 0
+    retsub
+
+raffle2_after_if_else@5:
+    frame_dig 4
+    int 1
+    +
+    frame_bury 4
+    b raffle2_for_header@1
+
+raffle2_after_for@7:
+    int 0
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.update() -> void:
+update:
+    proto 0 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.delete() -> void:
+delete:
+    proto 0 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Must be the creator wallet
+    retsub
+
+
+// smart_contracts.gacha_contract.contract.GachaContract.__init__() -> void:
+__init__:
+    proto 0 0
+    byte "raffle_price"
+    int 1000000
+    app_global_put
+    byte "assets_count"
+    int 0
+    app_global_put
+    retsub
+
+
+// _puya_lib.arc4.dynamic_array_pop_fixed_size(array: bytes, fixed_byte_size: uint64) -> bytes, bytes:
+dynamic_array_pop_fixed_size:
+    proto 2 2
+    frame_dig -2
+    int 0
+    extract_uint16
+    int 1
+    -
+    itob
+    extract 6 0
+    frame_dig -2
+    swap
+    replace2 0
+    dup
+    len
+    frame_dig -1
+    -
+    dup2
+    frame_dig -1
+    extract3
+    cover 2
+    int 0
+    swap
+    substring3
+    retsub

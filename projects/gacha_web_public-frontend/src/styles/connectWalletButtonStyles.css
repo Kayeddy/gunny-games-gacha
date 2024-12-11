@@ -1,0 +1,94 @@
+.connectWalletButton {
+  width: 10em;
+  position: relative;
+  height: 3.5em;
+  border: 3px ridge #149cea;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  transition: 1s;
+  border-radius: 0.3em;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.connectWalletButton::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 3%;
+  width: 95%;
+  height: 40%;
+  transition: 0.5s;
+  transform-origin: center;
+}
+
+.connectWalletButton::before {
+  content: '';
+  transform-origin: center;
+  position: absolute;
+  top: 80%;
+  left: 3%;
+  width: 95%;
+  height: 40%;
+  transition: 0.5s;
+}
+
+.connectWalletButton:hover::before,
+.connectWalletButton:hover::after {
+  transform: scale(0);
+}
+
+.connectWalletButton:hover {
+  box-shadow: inset 0px 0px 25px #1479ea;
+}
+
+.tooltip-container:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+}
+
+/* Tooltip initially positioned below the button */
+.tooltip-content {
+  position: absolute;
+  top: 102%; /* Positioned below */
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  border: 3px ridge #149cea;
+  border-radius: 15px;
+  padding: 22px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    visibility 0.5s ease;
+  z-index: 100;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+/* Hover to show tooltip */
+.tooltip-container:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+}
+
+/* Media query for devices below lg (1024px) */
+@media (max-width: 1024px) {
+  .tooltip-content {
+    top: auto; /* Remove the default 'top' */
+    bottom: 102%; /* Position above the button */
+    transform: translateX(-50%) scale(0.8); /* Reset transformation */
+  }
+
+  .tooltip-container:hover .tooltip-content {
+    transform: translateX(-50%) scale(1); /* Ensure tooltip expands properly */
+  }
+}

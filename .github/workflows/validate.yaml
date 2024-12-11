@@ -1,0 +1,14 @@
+name: Pull Request validation
+
+on: [pull_request]
+
+
+jobs:
+  gacha_web_public-contracts-ci:
+    name: Run gacha_web_public-contracts validation
+    uses: ./.github/workflows/gacha_web_public-contracts-ci.yaml
+
+  gacha_web_public-frontend-ci:
+    name: Run gacha_web_public-frontend validation
+    uses: ./.github/workflows/gacha_web_public-frontend-ci.yaml
+

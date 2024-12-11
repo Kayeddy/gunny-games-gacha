@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 1.2.10
+_src_path: gh:algorandfoundation/algokit-python-template
+author_email: sebas6612@gmail.com
+author_name: sebas6612
+contract_name: gacha_contract
+deployment_language: python
+preset_name: production
+project_name: gacha_web_public-contracts
+

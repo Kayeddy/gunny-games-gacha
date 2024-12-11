@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  gacha_web_public-contracts-validate:
+    name: Run gacha_web_public-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/gacha_web_public-contracts-ci.yaml
+
+  gacha_web_public-contracts-release:
+    name: Run gacha_web_public-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/gacha_web_public-contracts-cd.yaml
+    needs: gacha_web_public-contracts-validate
+
+  gacha_web_public-frontend-validate:
+    name: Run gacha_web_public-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/gacha_web_public-frontend-ci.yaml
+
+  gacha_web_public-frontend-release:
+    name: Run gacha_web_public-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/gacha_web_public-frontend-cd.yaml
+    needs: gacha_web_public-frontend-validate
